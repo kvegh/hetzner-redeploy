@@ -1,0 +1,8 @@
+---
+
+hetzner_autosetup_file: autosetup
+
+# hetzner_webservice_username: 
+# hetzner_webservice_password:
+# hetzner_image: "/root/.oldroot/nfs/install/../images/CentOS-75-64-minimal.tar.gz"
+# hetzner_hostname: "hostname.example.com"

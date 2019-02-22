@@ -1,0 +1,20 @@
+---
+- name: remove ssh known_hosts entries locally
+  known_hosts:
+    name: hetzner
+    path: /home/ansible/.ssh/known_hosts
+    state: absent 
+
+- name: scan for keys
+  shell: ssh-keyscan -t ecdsa hetzner
+  register: ssh_key_scanned
+
+- debug: var=ssh_key_scanned
+        
+- name: add ssh known_hosts entries locally
+  known_hosts:
+    name: "hetzner"
+    state: present
+    path: /home/ansible/.ssh/known_hosts
+    key: "{{ ssh_key_scanned.stdout }}"
+

@@ -1,0 +1,16 @@
+- name: provision hetzner root server
+  hosts: localhost
+  vars_files: 
+    - /home/ansible/secvar/hetzner_vars.yml
+
+  vars:
+    hetzner_webservice_username: "{{ secret_webservice_username }}"
+    hetzner_webservice_password: "{{ secret_webservice_password }}"
+    hetzner_image: "{{ secret_image }}"
+    hetzner_hostname: "{{ secret_hostname }}"
+    hetzner_ip: "{{ secret_ip }}"
+
+  tasks:
+  - import_role:
+      name: hetzner-sshkeys
+

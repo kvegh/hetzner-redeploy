@@ -1,0 +1,14 @@
+- name: provision hetzner root server
+  hosts: hetzner
+
+  vars:
+    hetzner_webservice_username: "#ws+YCN6tU8a"
+    hetzner_webservice_password: "titokHetzWeb"
+    hetzner_image: "http://boernig.de/CentOS-75-el-x86_64-minimal.tar.xz"
+    hetzner_hostname: "prhel.example.com"
+    hetzner_ip: "88.99.250.153"
+
+  tasks:
+  - import_role:
+      name: hetzner-sshserver
+
