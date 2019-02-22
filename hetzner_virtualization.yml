@@ -1,0 +1,11 @@
+---
+- name: set up the virtualization environment
+  hosts: hetzner
+
+  tasks: 
+  - name: enable libvirtd
+    systemd: 
+      state: started
+      name: libvirtd
+
+

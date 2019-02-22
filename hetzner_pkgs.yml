@@ -1,0 +1,32 @@
+---
+- name: install necessary pkgs
+  hosts: hetzner
+
+  tasks: 
+  - name: install pkgs
+    yum: 
+      state: latest
+      name: 
+        - libvirt-client
+        - virt-install
+        - qemu-kvm
+        - libvirt
+        - libvirt-python
+        - virt-manager
+        - git
+        - wget 
+        - psmisc
+        - iotop
+        - strace
+        - virt-viewer
+        - libguestfs-tools
+        - bind-utils
+        - sysstat
+        - NetworkManager-glib
+        - httpd
+        - mlocate
+        - mod_ssl 
+        - httpd 
+        - tcpdump
+
+

@@ -1,0 +1,67 @@
+---
+- name: git clone GDrive download
+  hosts: hetzner
+
+  tasks: 
+  - name: create /opt structure
+    file: 
+      state: directory
+      name: "{{ item }}"
+    with_items:
+        - /opt/data
+        - /opt/data/vms
+        - /opt/apps
+        - /opt/apps/gdown
+
+  - name: download and unpack gdownload
+    unarchive:
+      src: "https://github.com/circulosmeos/gdown.pl/archive/v1.1.tar.gz"
+      dest: /opt/apps/gdown
+      remote_src: yes
+
+  - name: permission to execute gdown
+    file:
+      path: "/opt/apps/gdown/gdown.pl-1.1/gdown.pl"
+      mode: 0750
+
+  - name: download rhelbase
+    shell: cd /opt/data/vms/ && perl /opt/apps/gdown/gdown.pl-1.1/gdown.pl "{{ hetzner_rhel_image_location }}" rhelbase.tar.gz 
+
+  - name: download winbase
+    shell: cd /opt/data/vms/ && perl /opt/apps/gdown/gdown.pl-1.1/gdown.pl "{{ hetzner_win_image_location }}" winbase.tar.gz 
+
+  - name: unpack images 
+    unarchive:
+      src: "{{ item }}"
+      dest: /opt/data/vms
+      remote_src: yes
+    with_items: 
+      - /opt/data/vms/rhelbase.tar.gz
+      - /opt/data/vms/winbase.tar.gz
+
+  - name: fix ugly archive
+    shell: mv /opt/data/vms/opt/data/vms/win2k116-clone-clone.qcow2 /opt/data/vms/ && rm -rf /opt/data/vms/opt
+
+  - name: drop compressed files
+    file:
+      state: absent
+      name: "{{ item }}"
+    with_items:
+        - /opt/data/vms/rhelbase.tar.gz
+        - /opt/data/vms/winbase.tar.gz
+
+  - name: set ownserships
+    file: 
+      path: /opt/data/vms
+      owner: root
+      group: root
+      mode: 0755
+      recurse: yes
+
+  - name: create image domains - rhel
+    command: virt-install --import --name rhel-image --memory 4096 --vcpus 1 --os-variant rhel7 --disk /opt/data/vms/rhel7base-rhel7.4-clone.qcow2 --noautoconsole --noreboot
+
+  - name: create image domains - win
+    command: virt-install --import --name win-image --memory 4096 --vcpus 1 --os-variant rhel7 --disk /opt/data/vms/win2k116-clone-clone.qcow2 --noautoconsole --noreboot
+
+
