@@ -1,0 +1,16 @@
+---
+- name: install necessary pkgs
+  hosts: hetzner
+  user: root
+  vars_files: 
+    - /home/ansible/secvar/hetzner_vars.yml
+
+  tasks: 
+  - name: setup users
+    user: 
+      state: present
+      name: 
+        - "{{ ansible_user }}" 
+        - "{{ personal_user }}"
+
+

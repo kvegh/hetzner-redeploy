@@ -1,0 +1,24 @@
+---
+- name: set sudoers for ansible
+  hosts: hetzner
+  user: root
+  
+  tasks:
+  - name: setup sudoers 
+    lineinfile: 
+      path: /etc/sudoers
+      state: present
+      line: "{{ ansible_user }} ALL=(ALL) NOPASSWD: ALL"
+      insertafter: '# %wheel        ALL=(ALL)       NOPASSWD: ALL'
+      validate: '/usr/sbin/visudo -cf %s'   
+
+  - name: setup sudoers 
+    lineinfile: 
+      path: /etc/sudoers
+      state: present
+      line: "{{ personal_user }} ALL=(ALL) NOPASSWD: ALL"
+      insertafter: '# %wheel        ALL=(ALL)       NOPASSWD: ALL'
+      validate: '/usr/sbin/visudo -cf %s'   
+
+
+

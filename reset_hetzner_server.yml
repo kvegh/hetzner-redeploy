@@ -1,0 +1,18 @@
+- name: provision hetzner root server
+  hosts: hetzner
+  gather_facts: no
+  remote_user: root
+  vars_files: 
+    - /home/ansible/secvar/hetzner_vars.yml
+
+  vars:
+    hetzner_webservice_username: "{{ secret_webservice_username }}"
+    hetzner_webservice_password: "{{ secret_webservice_password }}"
+    hetzner_image: "{{ secret_image }}"
+    hetzner_hostname: "{{ secret_hostname }}"
+    hetzner_ip: "{{ secret_ip }}"
+
+  tasks:
+  - import_role:
+      name: provision-hetzner
+
