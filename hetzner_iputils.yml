@@ -1,0 +1,8 @@
+---
+- name: workaround for ping/iputils capabilities issue
+  hosts: hetzner
+
+  tasks: 
+  - name: yum reinstall iputils
+    command: yum -y reinstall iputils 
+
