@@ -1,22 +1,17 @@
 #!/bin/bash
 . env
-# ansible-playbook -i hosts reset_hetzner_server.yml 
-# ansible-playbook -i hosts hetzner_physusers.yml
-# ansible-playbook -i hosts hetzner_physkeys.yml
-# ansible-playbook -i hosts hetzner_sudo.yml
+ansible-playbook -i hosts reset_hetzner_server.yml 
+ansible-playbook -i hosts hetzner_physusers.yml
+ansible-playbook -i hosts hetzner_physkeys.yml
+ansible-playbook -i hosts hetzner_sudo.yml
 ansible-playbook -b -i hosts hetzner_sshserver.yml 
-cd /home/ansible/projects/AutomATa
 ansible-playbook -l hetzner -b -i inventory_hetzner/dynamic_custom_inventory.sh rhel_subscriptions.yml 
-cd -
 ansible-playbook -b -i hosts hetzner_pkgs.yml
 ansible-playbook -b -i hosts -l hetzner hetzner_update.yml
 ansible-playbook -b -i hosts hetzner_virtualization.yml
 ansible-playbook -b -i hosts hetzner_images.yml
-ssh hetzner ssh-keygen -f /home/ansible/.ssh/id_rsa -N \'\'
-cd /home/ansible/projects/AutomATa
 ansible-playbook -l hetzner -b -i inventory_hetzner/dynamic_custom_inventory.sh -e host_name=ansible-h rhel_vmcreate_hostname.yml 
 ansible-playbook -l hetzner -b -i inventory_hetzner/dynamic_custom_inventory.sh -e host_name=satellite-h rhel_vmcreate_hostname.yml 
-cd /home/ansible/projects/ansible-hetzner
 ansible-playbook -b -i hosts hetzner_dns.yml 
 ansible-playbook -b -i hosts hetzner_iputils.yml 
 cd /home/ansible/projects/AutomATa
