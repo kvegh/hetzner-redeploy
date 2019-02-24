@@ -1,5 +1,5 @@
 ---
-- name: install necessary pkgs
+- name: create remote users
   hosts: hetzner
   user: root
   vars_files: 
@@ -12,5 +12,6 @@
       name: 
         - "{{ ansible_user }}" 
         - "{{ personal_user }}"
+      generate_ssh_key: yes
 
 
