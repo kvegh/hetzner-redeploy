@@ -2,6 +2,8 @@
 - name: preparing for and installing Ansible Tower
   gather_facts: no
   hosts: ansible-h
+  vars_files: 
+  - /home/ansible/secvar/tower_cred.yml
 
   tasks: 
   - name: make sure the host runs
