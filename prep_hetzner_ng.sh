@@ -7,14 +7,13 @@ ansible-playbook -i hosts hetzner_sudo.yml
 ansible-playbook -b -i hosts hetzner_sshserver.yml 
 ansible-playbook -l hetzner -b -i inventory_hetzner/dynamic_custom_inventory.sh rhel_subscriptions.yml 
 ansible-playbook -b -i hosts hetzner_pkgs.yml
-ansible-playbook -b -i hosts -l hetzner hetzner_update.yml
+ansible-playbook -b -i hosts -l hetzner rhel_update.yml
 ansible-playbook -b -i hosts hetzner_virtualization.yml
 ansible-playbook -b -i hosts hetzner_images.yml
 ansible-playbook -l hetzner -b -i inventory_hetzner/dynamic_custom_inventory.sh -e host_name=ansible-h rhel_vmcreate_hostname.yml 
 ansible-playbook -l hetzner -b -i inventory_hetzner/dynamic_custom_inventory.sh -e host_name=satellite-h rhel_vmcreate_hostname.yml 
 ansible-playbook -b -i hosts hetzner_dns.yml 
 ansible-playbook -b -i hosts hetzner_iputils.yml 
-cd /home/ansible/projects/AutomATa
 ansible-playbook -b -l hetzner -i inventory_hetzner/dynamic_custom_inventory.sh rhel_webserversetup.yml
 ansible-playbook -i inventory_hetzner/dynamic_custom_inventory.sh -e host_name=ansible-h rhel_sshkeyssetup_hostname_bastion.yml
 ansible-playbook -i inventory_hetzner/dynamic_custom_inventory.sh -e host_name=satellite-h rhel_sshkeyssetup_hostname_bastion.yml
@@ -23,7 +22,7 @@ ansible-playbook -b -l gatewayed -i inventory_hetzner/dynamic_custom_inventory.s
 ansible-playbook -l gatewayed -b -i inventory_hetzner/dynamic_custom_inventory.sh rhel_fixip_hetzner.yml
 ansible-playbook -l hetzner -b -i inventory_hetzner/dynamic_custom_inventory.sh hosts_and_networks_hetzner.yml
 ansible-playbook -l ansible-h -b -i inventory_hetzner/dynamic_custom_inventory.sh tower_install.yml
-ansible-playbook -b -i inventory_hetzner/dynamic_custom_inventory.sh -l hetzner hetzner_ssl_command.yml
+ansible-playbook -b -i inventory_hetzner/dynamic_custom_inventory.sh -l hetzner hetzner_ssl_shell.yml
 ansible-playbook -b -i inventory_hetzner/dynamic_custom_inventory.sh sslproxy.yml
 ansible-playbook -b -i inventory_hetzner/hosts tower_licence.yml 
 ssh ansible-h -o ProxyCommand="ssh -W %h:%p -q ansible@hetzner" ssh-keygen -f /home/ansible/.ssh/id_rsa -N \'\' 
